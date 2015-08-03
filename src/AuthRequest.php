@@ -53,10 +53,6 @@ class AuthRequest implements SensitiveObjectInterface
         if (!isset($this->decryptedPayload['nonce'])) {
             throw new \InvalidArgumentException('Malformed data - nonce missing');
         }
-
-        if ($this->service->isUseProvidedUser() && !isset($this->decryptedPayload['uname'])) {
-            throw new \InvalidArgumentException('Malformed data - uname missing while useProvidedUser is set');
-        }
     }
 
     /**
