@@ -8,6 +8,7 @@ class AuthResponse implements SensitiveObjectInterface
     use SensitiveObjectClearer;
 
     const GENERAL_FAILURE  = -999; //Some internal error (or error which cannot be specified due to security reasons)
+    const ADAPTER_FAILURE = -5; //Adapter was unable to authenticate user
     const TIMEOUT          = -4;
     const NO_USER_PROVIDED = -3; //Similar to USER_MISSMATCH but used when no user was provided (but useProvidedUser was enabled)
     const USER_MISSMATCH   = -2; //Used when useProvidedUser enabled and user sent is different from user provided
@@ -39,9 +40,12 @@ class AuthResponse implements SensitiveObjectInterface
     {
         static $codes = [
             self::GENERAL_FAILURE,
+            self::ADAPTER_FAILURE,
+            self::TIMEOUT,
             self::NO_USER_PROVIDED,
             self::USER_MISSMATCH,
             self::NO_SUCH_USER,
+            self::CONFLICT,
             self::AUTH_OK
         ];
 
