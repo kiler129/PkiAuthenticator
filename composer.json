@@ -1,13 +1,13 @@
 {
-  "name": "noflash/pki-authenticator",
+  "name": "noflash/pki-authenticator-server",
   "description": "Simple authenticator based on PKI used in iCar project.",
   "keywords": [
     "authentication",
     "pki",
     "openssl"
   ],
-  "homepage": "https://github.com/kiler129/PkiAuthenticator",
-  "license": "proprietary",
+  "homepage": "https://github.com/kiler129/PkiAuthenticatorServer",
+  "license": "MIT",
   "authors": [
     {
       "name": "Grzegorz Zdanowski",
