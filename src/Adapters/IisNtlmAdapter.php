@@ -29,6 +29,8 @@ class IisNtlmAdapter implements AuthAdapterInterface
             }
         }
 
-        return new AuthResponse(AuthResponse::AUTH_OK);
+        $responsePayload['uname'] = $_SERVER['LOGON_USER'];
+
+        return new AuthResponse(AuthResponse::AUTH_OK, $responsePayload);
     }
 }
