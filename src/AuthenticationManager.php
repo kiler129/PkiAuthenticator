@@ -40,19 +40,28 @@ class AuthenticationManager
     private function getAuthenticationAdapter()
     {
         //TODO add check for adapter interface
+        //TODO ...plus I don't like this method code
 
         $adapter = ($this->service->getAdapter()) ?: $this->config->getDefaultAdapter();
+        $adapterOptions = $this->service->getAdapterOptions();
+        if (empty($adapterOptions)) {
+            $adapterOptions = $this->config->getDefaultOptionsForAdapter();
+        }
+
         if ($adapter === null) {
             throw new \RuntimeException('No suitable authentication adapter found');
         }
 
         if (class_exists($adapter)) { //Try FQCN
-            return new $adapter;
+            $adapterInstance = new $adapter;
+            $adapterInstance->setOptions($adapterOptions);
 
         } elseif (class_exists('noFlash\PkiAuthenticator\Adapters\\' . $adapter . 'Adapter')) { //Try default adapter
             $class = 'noFlash\PkiAuthenticator\Adapters\\' . $adapter . 'Adapter';
+            $adapterInstance = new $class;
+            $adapterInstance->setOptions($adapterOptions);
 
-            return new $class;
+            return $adapterInstance;
         }
 
         throw new \RuntimeException('Adapter specified for service cannot be initialized');

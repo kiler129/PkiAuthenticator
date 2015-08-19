@@ -32,6 +32,11 @@ class Service
      */
     private $adapter;
 
+    /**
+     * @var array|null
+     */
+    private $adapterOptions;
+
     public function __construct($name, Config $config = null)
     {
         $this->name = $name;
@@ -122,5 +127,21 @@ class Service
         $this->adapter = $adapter;
 
         return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getAdapterOptions()
+    {
+        return $this->adapterOptions;
+    }
+
+    /**
+     * @param array|null $adapterOptions
+     */
+    public function setAdapterOptions($adapterOptions)
+    {
+        $this->adapterOptions = $adapterOptions;
     }
 }

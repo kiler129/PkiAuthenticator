@@ -1,0 +1,16 @@
+{
+  "Server": {
+    "keychain": "keys/",
+    "privateKey": "server_demo_priv",
+    "defaultAdapter": "AuthAll",
+    "defaultOptionsForAdapter": {}
+  },
+  "Services": {
+    "demoService": {
+      "adapter": "AuthAll",
+      "publicKey": "demo_service_pub",
+      "redirectUrl": "http://demoservice.local/login_by_pki.php?auth=%s",
+      "useProvidedUser": true
+    }
+  }
+}

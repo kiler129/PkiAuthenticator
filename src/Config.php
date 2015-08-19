@@ -19,6 +19,11 @@ class Config
     private $defaultAdapter;
 
     /**
+     * @var array|null
+     */
+    private $defaultOptionsForAdapter;
+
+    /**
      * @var Keychain
      */
     private $keychain;
@@ -54,13 +59,17 @@ class Config
     private function __construct($source)
     {
         //TODO check config permissions!
-        $configuration = parse_ini_file($source, true, INI_SCANNER_TYPED);
+        $configuration = json_decode(file_get_contents($source), true);
         if (!$configuration) {
-            throw new \RuntimeException("Failed to parse configuration from file $source");
+            throw new \RuntimeException("Failed to parse configuration from file $source - " . json_last_error_msg());
         }
 
         if (isset($configuration['Server']['defaultAdapter'])) {
             $this->defaultAdapter = $configuration['Server']['defaultAdapter']; //Due to performance reasons it's not validated on config load
+        }
+
+        if (isset($configuration['Server']['defaultOptionsForAdapter'])) {
+            $this->defaultOptionsForAdapter = $configuration['Server']['defaultOptionsForAdapter'];
         }
 
         $this->prepareKeychain($configuration);
@@ -123,6 +132,10 @@ class Config
             $service->setAdapter($this->services[$name]['adapter']);
         }
 
+        if (isset($this->services[$name]['adapterOptions'])) {
+            $service->setAdapterOptions((array)$this->services[$name]['adapterOptions']);
+        }
+
         if (isset($this->services[$name]['useProvidedUser'])) {
             $service->setUseProvidedUser($this->services[$name]['useProvidedUser']);
         }
@@ -145,4 +158,14 @@ class Config
     {
         return $this->defaultAdapter;
     }
+
+    /**
+     * @return null|array
+     */
+    public function getDefaultOptionsForAdapter()
+    {
+        return $this->defaultOptionsForAdapter;
+    }
+
+
 }
