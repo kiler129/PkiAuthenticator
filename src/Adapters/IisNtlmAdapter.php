@@ -33,4 +33,13 @@ class IisNtlmAdapter implements AuthAdapterInterface
 
         return new AuthResponse(AuthResponse::AUTH_OK, $responsePayload);
     }
+
+    /**
+     * @param array $options
+     *
+     * @return void
+     */
+    function setOptions(array $options)
+    {
+    }
 }
